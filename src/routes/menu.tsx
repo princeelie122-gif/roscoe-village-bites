@@ -192,14 +192,37 @@ function MenuPage() {
                   Tap the + next to any dish to start an order.
                 </p>
               ) : (
-                <ul className="mt-4 space-y-2 text-sm">
-                  {lines.map(([item, qty]) => (
-                    <li key={item} className="flex justify-between gap-4 border-b border-cream/10 pb-2">
-                      <span className="text-cream/85">{item}</span>
-                      <span className="text-gold">x{qty}</span>
-                    </li>
-                  ))}
-                </ul>
+                <>
+                  <ul className="mt-4 space-y-2 text-sm">
+                    {lines.map(([item, qty]) => (
+                      <li
+                        key={item}
+                        className="flex items-start justify-between gap-4 border-b border-cream/10 pb-2"
+                      >
+                        <span className="text-cream/85">
+                          <span className="text-gold">{qty}×</span> {item}
+                        </span>
+                        <span className="whitespace-nowrap text-cream">
+                          {money((PRICES[item] ?? 0) * qty)}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                  <dl className="mt-4 space-y-1 text-sm">
+                    <div className="flex justify-between text-cream/70">
+                      <dt>Subtotal</dt>
+                      <dd>{money(subtotal)}</dd>
+                    </div>
+                    <div className="flex justify-between text-cream/70">
+                      <dt>Tax ({(TAX_RATE * 100).toFixed(2)}%)</dt>
+                      <dd>{money(tax)}</dd>
+                    </div>
+                    <div className="flex justify-between border-t border-cream/15 pt-2 font-display text-2xl text-gold">
+                      <dt>Total</dt>
+                      <dd>{money(total)}</dd>
+                    </div>
+                  </dl>
+                </>
               )}
 
               <div className="mt-5 space-y-3">
@@ -207,6 +230,13 @@ function MenuPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Your name"
+                  className="w-full rounded-lg border border-cream/20 bg-cream/5 px-4 py-3 text-sm text-cream placeholder:text-cream/40 focus:border-gold focus:outline-none"
+                />
+                <input
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  inputMode="tel"
+                  placeholder="Your phone number"
                   className="w-full rounded-lg border border-cream/20 bg-cream/5 px-4 py-3 text-sm text-cream placeholder:text-cream/40 focus:border-gold focus:outline-none"
                 />
                 <input
@@ -226,7 +256,7 @@ function MenuPage() {
 
               <div className="mt-5 space-y-3">
                 <a
-                  href={count > 0 ? smsHref : undefined}
+                  href={count > 0 ? mailHref : undefined}
                   aria-disabled={count === 0}
                   className={`flex items-center justify-center gap-2 rounded-full px-6 py-3.5 font-display text-lg tracking-widest ${
                     count > 0
@@ -234,8 +264,8 @@ function MenuPage() {
                       : "pointer-events-none bg-cream/15 text-cream/40"
                   }`}
                 >
-                  <Send className="h-4 w-4" aria-hidden />
-                  Send Order by Text
+                  <Mail className="h-4 w-4" aria-hidden />
+                  Email Order to Restaurant
                 </a>
                 <a
                   href={`tel:${RESTAURANT.phoneDial}`}
@@ -246,9 +276,11 @@ function MenuPage() {
                 </a>
               </div>
               <p className="mt-4 text-xs text-cream/50">
-                Your order opens in your phone's messaging app addressed to the restaurant, so
-                nothing is lost in between. Please call to confirm large orders.
+                Your order opens in your email app addressed to {ORDER_EMAIL} with every item,
+                quantity and the total. Please call {RESTAURANT.phoneDisplay} to confirm large
+                orders.
               </p>
+
             </div>
           </aside>
         </div>
