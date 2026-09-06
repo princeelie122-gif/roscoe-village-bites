@@ -19,7 +19,6 @@ import {
   HOURS,
   MAP_EMBED_URL,
   RESTAURANT,
-  REVIEWS_URL,
 } from "@/lib/restaurant";
 
 export const Route = createFileRoute("/")({
