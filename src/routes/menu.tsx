@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Minus, Phone, Plus, Send, ShoppingBag } from "lucide-react";
+import { Mail, Minus, Phone, Plus, ShoppingBag } from "lucide-react";
 
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { MobileBar } from "@/components/mobile-bar";
-import { MENU, RESTAURANT } from "@/lib/restaurant";
+import { MENU, ORDER_EMAIL, RESTAURANT, TAX_RATE, money } from "@/lib/restaurant";
+
 
 export const Route = createFileRoute("/menu")({
   component: MenuPage,
