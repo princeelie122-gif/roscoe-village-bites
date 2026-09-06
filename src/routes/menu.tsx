@@ -32,9 +32,14 @@ export const Route = createFileRoute("/menu")({
 
 type Cart = Record<string, number>;
 
+const PRICES: Record<string, number> = Object.fromEntries(
+  MENU.flatMap((cat) => cat.items.map((item) => [`${cat.title} — ${item.name}`, item.price])),
+);
+
 function MenuPage() {
   const [cart, setCart] = useState<Cart>({});
   const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
   const [pickupTime, setPickupTime] = useState("");
   const [notes, setNotes] = useState("");
 
@@ -43,24 +48,37 @@ function MenuPage() {
     [cart],
   );
   const count = lines.reduce((sum, [, qty]) => sum + qty, 0);
+  const subtotal = lines.reduce((sum, [key, qty]) => sum + (PRICES[key] ?? 0) * qty, 0);
+  const tax = subtotal * TAX_RATE;
+  const total = subtotal + tax;
 
   const add = (key: string, delta: number) =>
     setCart((c) => ({ ...c, [key]: Math.max(0, (c[key] ?? 0) + delta) }));
 
-  const orderText = useMemo(() => {
-    const items = lines.map(([item, qty]) => `${qty}x ${item}`).join(", ");
+  const orderBody = useMemo(() => {
+    const items = lines
+      .map(([item, qty]) => `${qty} x ${item} — ${money((PRICES[item] ?? 0) * qty)}`)
+      .join("\n");
     return [
-      `Pickup order for ${RESTAURANT.name}:`,
+      `New pickup order for ${RESTAURANT.name}`,
+      "",
       items,
-      name ? `Name: ${name}` : "",
-      pickupTime ? `Pickup time: ${pickupTime}` : "",
-      notes ? `Notes: ${notes}` : "",
-    ]
-      .filter(Boolean)
-      .join(" | ");
-  }, [lines, name, pickupTime, notes]);
+      "",
+      `Subtotal: ${money(subtotal)}`,
+      `Tax (${(TAX_RATE * 100).toFixed(2)}%): ${money(tax)}`,
+      `Total: ${money(total)}`,
+      "",
+      `Name: ${name || "—"}`,
+      `Phone: ${phone || "—"}`,
+      `Pickup time: ${pickupTime || "As soon as possible"}`,
+      `Notes: ${notes || "—"}`,
+    ].join("\n");
+  }, [lines, name, phone, pickupTime, notes, subtotal, tax, total]);
 
-  const smsHref = `sms:${RESTAURANT.phoneDial}?&body=${encodeURIComponent(orderText)}`;
+  const mailHref = `mailto:${ORDER_EMAIL}?subject=${encodeURIComponent(
+    `Pickup order — ${name || "Online order"} (${money(total)})`,
+  )}&body=${encodeURIComponent(orderBody)}`;
+
 
   return (
     <div className="min-h-screen bg-background">
