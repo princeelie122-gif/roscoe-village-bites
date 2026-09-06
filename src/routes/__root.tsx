@@ -108,6 +108,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@type": "Restaurant",
           name: "Tepalcates",
           servesCuisine: "Mexican",
+          priceRange: "$$",
+          hasMenu: "/menu",
           telephone: "+1-773-237-6638",
           address: {
             "@type": "PostalAddress",
@@ -123,6 +125,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
             { "@type": "OpeningHoursSpecification", dayOfWeek: ["Friday", "Saturday"], opens: "10:00", closes: "21:30" },
             { "@type": "OpeningHoursSpecification", dayOfWeek: ["Sunday"], opens: "11:00", closes: "19:00" },
           ],
+          // Monday is closed, so it is intentionally omitted above.
         }),
       },
     ],

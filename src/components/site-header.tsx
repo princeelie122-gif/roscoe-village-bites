@@ -10,9 +10,9 @@ const NAV = [
   { label: "Menu", to: "/menu" },
   { label: "Our Story", to: "/", hash: "story" },
   { label: "Gallery", to: "/", hash: "gallery" },
-  { label: "Reviews", to: "/", hash: "reviews" },
+  { label: "Reviews", to: "/reviews" },
   { label: "Visit Us", to: "/", hash: "visit" },
-] as const satisfies ReadonlyArray<{ label: string; to: "/" | "/menu"; hash?: string }>;
+] as const satisfies ReadonlyArray<{ label: string; to: "/" | "/menu" | "/reviews"; hash?: string }>;
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
