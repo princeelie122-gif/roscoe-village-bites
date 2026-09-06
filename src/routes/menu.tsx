@@ -139,9 +139,10 @@ function MenuPage() {
                             </p>
                           ) : null}
                         </div>
-                        <span className="hidden text-sm font-medium text-muted-foreground sm:block">
-                          {item.price ?? "Market price"}
+                        <span className="text-sm font-semibold text-terracotta">
+                          {money(item.price)}
                         </span>
+
                         <div className="flex items-center gap-2">
                           {qty > 0 ? (
                             <>
