@@ -6,13 +6,13 @@ import logo from "@/assets/logo.png";
 import { RESTAURANT } from "@/lib/restaurant";
 
 const NAV = [
-  { label: "Home", to: "/", hash: undefined as string | undefined },
-  { label: "Menu", to: "/menu", hash: undefined },
+  { label: "Home", to: "/" },
+  { label: "Menu", to: "/menu" },
   { label: "Our Story", to: "/", hash: "story" },
   { label: "Gallery", to: "/", hash: "gallery" },
   { label: "Reviews", to: "/", hash: "reviews" },
   { label: "Visit Us", to: "/", hash: "visit" },
-];
+] as const satisfies ReadonlyArray<{ label: string; to: "/" | "/menu"; hash?: string }>;
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -49,7 +49,7 @@ export function SiteHeader() {
             <Link
               key={item.label}
               to={item.to}
-              hash={item.hash}
+              {...("hash" in item ? { hash: item.hash } : {})}
               className="text-sm font-medium uppercase tracking-widest text-cream/80 transition-colors hover:text-gold"
             >
               {item.label}
@@ -89,7 +89,7 @@ export function SiteHeader() {
               <Link
                 key={item.label}
                 to={item.to}
-                hash={item.hash}
+                {...("hash" in item ? { hash: item.hash } : {})}
                 onClick={() => setOpen(false)}
                 className="border-b border-cream/10 py-3 font-display text-2xl tracking-widest text-cream last:border-0"
               >
