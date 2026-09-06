@@ -94,7 +94,7 @@ function MenuPage() {
               <a href={`tel:${RESTAURANT.phoneDial}`} className="text-gold underline">
                 {RESTAURANT.phoneDisplay}
               </a>
-              . Items and prices should be confirmed with the restaurant.
+              . Please confirm prices with the restaurant before large orders.
             </p>
           </div>
           <div className="greca-rule" />

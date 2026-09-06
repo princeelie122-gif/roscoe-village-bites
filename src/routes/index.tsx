@@ -251,14 +251,12 @@ function Home() {
                 </li>
               ))}
             </ul>
-            <a
-              href={REVIEWS_URL}
-              target="_blank"
-              rel="noreferrer"
+            <Link
+              to="/reviews"
               className="mt-10 inline-flex rounded-full bg-charcoal px-8 py-4 font-display text-xl tracking-widest text-cream transition-transform hover:scale-[1.03]"
             >
               Read Our Reviews
-            </a>
+            </Link>
           </div>
         </section>
 
