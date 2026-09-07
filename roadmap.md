@@ -7,3 +7,6 @@
 - [x] Confirm address/hours in structured data
 - [ ] Publish site (declined this round)
 - [ ] Owner to confirm real prices, real review quotes, and the order email address
+- [x] Reservation page (date, time, party size, contact) emailing the restaurant
+- [x] New logo + matching site icon
+- [ ] Replace illustrative food/interior photos with the restaurant's real photos (waiting on uploads)

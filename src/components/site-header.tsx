@@ -8,11 +8,16 @@ import { RESTAURANT } from "@/lib/restaurant";
 const NAV = [
   { label: "Home", to: "/" },
   { label: "Menu", to: "/menu" },
+  { label: "Reservations", to: "/reservations" },
   { label: "Our Story", to: "/", hash: "story" },
   { label: "Gallery", to: "/", hash: "gallery" },
   { label: "Reviews", to: "/reviews" },
   { label: "Visit Us", to: "/", hash: "visit" },
-] as const satisfies ReadonlyArray<{ label: string; to: "/" | "/menu" | "/reviews"; hash?: string }>;
+] as const satisfies ReadonlyArray<{
+  label: string;
+  to: "/" | "/menu" | "/reviews" | "/reservations";
+  hash?: string;
+}>;
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
